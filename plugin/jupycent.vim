@@ -18,7 +18,7 @@ if !g:jupycent_enable
     finish
 endif
 
-augroup jupycent_ipynb
+augroup jupycent
     au!
     autocmd BufReadPost *.ipynb call s:read_from_ipynb()
 augroup END
@@ -50,9 +50,9 @@ function! s:read_from_ipynb()  "{{{
   setlocal foldtext=getline(v:foldstart+1)
   syntax match JupycentCell /^#\ %%/
   hi link JupycentCell FoldColumn
-  execute "autocmd jupycent_ipynb BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
+  execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   if !l:jupycent_file_exists
-    execute "autocmd jupycent_ipynb BufUnload <buffer> call s:cleanup()"
+    execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   endif
 endfunction  "}}}
 
