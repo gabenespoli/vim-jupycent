@@ -23,7 +23,7 @@ augroup jupycent_ipynb
     autocmd BufReadPost *.ipynb call s:read_from_ipynb()
 augroup END
 
-function! s:read_from_ipynb()
+function! s:read_from_ipynb()  "{{{
   if expand("<afile>:e") != "ipynb"
     echo "Not an ipynb file."
     return
@@ -54,9 +54,9 @@ function! s:read_from_ipynb()
   if !l:jupycent_file_exists
     execute "autocmd jupycent_ipynb BufUnload <buffer> call s:cleanup()"
   endif
-endfunction
+endfunction  "}}}
 
-function! s:write_to_ipynb() abort
+function! s:write_to_ipynb() abort  "{{{
   if !exists("b:jupycent_ipynb_file")
     echo "Not a jupycent py file."
     return
@@ -67,17 +67,17 @@ function! s:write_to_ipynb() abort
         \ . "--output " . shellescape(b:jupycent_ipynb_file) . " "
         \ . shellescape(l:jupycent_file))
   echo b:jupycent_ipynb_file . " updated."
-endfunction
+endfunction  "}}}
 
-function! s:cleanup()
+function! s:cleanup()  "{{{
   if !exists("b:jupycent_ipynb_file")
     echo "Not a jupycent py file."
     return
   endif
   call delete(expand("<afile>:p"))
-endfunction
+endfunction  "}}}
 
-function! JupycentFold(lnum)
+function! JupycentFold(lnum)  "{{{
   let l:line = getline(a:lnum) 
   if a:lnum <= 2 && l:line =~# '^#\ ---$'
     return '>1'
@@ -88,6 +88,6 @@ function! JupycentFold(lnum)
   else
     return '='
   endif
-endfunction
+endfunction  "}}}
 
 let loaded_jupycent = 1
