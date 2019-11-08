@@ -90,4 +90,20 @@ function! JupycentFold(lnum)  "{{{
   endif
 endfunction  "}}}
 
+function! JupycentSaveIpynb()  "{{{
+  if expand("%:e") != "py"
+    echo "Not a python (.py) file"
+    return
+  endif
+  let l:filename = expand("%:r") . ".ipynb"
+  let l:output = system(g:jupycent_command
+        \ . " --from=py:percent "
+        \ . g:jupycent_to_ipynb_opts . " "
+        \ . "--output " . shellescape(l:filename) . " "
+        \ . shellescape(expand("%:p")))
+  echo "File written: " . l:filename
+endfunction  "}}}
+
+command JupycentSaveIpynb call JupycentSaveIpynb()
+
 let loaded_jupycent = 1
