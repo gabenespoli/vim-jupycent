@@ -51,15 +51,17 @@ preserved when closing the buffer.
 
 The plugin has the following settings. If you want to override the default values shown below, you can define the corresponding variables in your `~/.vimrc`.
 
-*   `let g:jupytext_enable = 1`
+*   `let g:jupycent_enable = 1`
 
     You may disable the automatic conversion of `ipynb` files (i.e., deactivate this plugin) by setting this to 0.
 
-*   `let g:jupytext_command = 'jupytext'`
+*   `let g:jupycent_command = 'jupytext'`
 
     The CLI `jupytext` command to use. You may include the full path to point to a specific `jupytext` executable not in your default `$PATH`.
 
-*  `let g:jupytext_to_ipynb_opts = '--to=ipynb --update'`
+*   `let g:jupycent_to_ipynb_opts = '--to=ipynb --update'`
+
+    Command line options for the conversion from `g:jupytext_fmt` back to the notebook format
 
    Command line options for the conversion from `g:jupytext_fmt` back to the notebook format
 
