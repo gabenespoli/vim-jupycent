@@ -49,6 +49,7 @@ function! s:read_from_ipynb()  "{{{
   setlocal foldexpr=JupycentFold(v:lnum)
   setlocal foldtext=getline(v:foldstart+1)
   syntax match JupycentCell /^#\ %%/
+  syntax match JupycentCell /^#\ %%\ \[markdown\]/
   hi link JupycentCell FoldColumn
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   if !l:jupycent_file_exists
