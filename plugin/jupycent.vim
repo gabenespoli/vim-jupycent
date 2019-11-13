@@ -84,7 +84,7 @@ function! JupycentFold(lnum)  "{{{
     return '>1'
   elseif l:line =~# '^#\ %%$'
     return '>1'
-  elseif l:line =~# '^#\ %% [markdown]$'
+  elseif l:line =~# '^#\ %%\ \[markdown\]$'
     return '>1'
   else
     return '='
