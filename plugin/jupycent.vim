@@ -14,6 +14,10 @@ if !exists('g:jupycent_to_ipynb_opts')
     let g:jupycent_to_ipynb_opts = '--to=ipynb --update'
 endif
 
+if !exists('g:jupycent_line_return')
+  let g:jupycent_line_return = 1
+endif
+
 if !g:jupycent_enable
     finish
 endif
@@ -54,6 +58,9 @@ function! s:read_from_ipynb()  "{{{
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   if !l:jupycent_file_exists
     execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
+  endif
+  if g:jupycent_line_return
+    normal! g`"zvzz
   endif
 endfunction  "}}}
 

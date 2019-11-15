@@ -63,7 +63,9 @@ The plugin has the following settings. If you want to override the default value
 
     Command line options for the conversion from `g:jupytext_fmt` back to the notebook format
 
-   Command line options for the conversion from `g:jupytext_fmt` back to the notebook format
+*   `let g:jupycent_line_return = 1
+
+    When opening a notebook as a .py, return to the last line you were editing using `g\`"zvzz`
 
 ## Acknowledgements
 
