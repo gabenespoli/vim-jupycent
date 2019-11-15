@@ -45,9 +45,12 @@ function! s:read_from_ipynb()  "{{{
   let l:bufnr = bufnr("%")
   execute "edit " . l:jupycent_file
   execute "bwipeout" . l:bufnr
+  call s:jupycent_set_buffer(l:filename, !l:jupycent_file_exists)
+endfunction  "}}}
 
+function s:jupycent_set_buffer(filename, delete_on_close)  "{{{
   " set properties of the jupycent file buffer
-  let b:jupycent_ipynb_file = l:filename
+  let b:jupycent_ipynb_file = a:filename
   set filetype=python
   setlocal foldmethod=expr
   setlocal foldexpr=JupycentFold(v:lnum)
@@ -56,7 +59,7 @@ function! s:read_from_ipynb()  "{{{
   syntax match JupycentCell /^#\ %%\ \[markdown\]/
   hi link JupycentCell FoldColumn
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
-  if !l:jupycent_file_exists
+  if a:delete_on_close
     execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   endif
   if g:jupycent_line_return
