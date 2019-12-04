@@ -35,7 +35,7 @@ function! s:read_from_ipynb()  "{{{
   let l:filename = expand("%:p")
   let l:jupycent_file = fnamemodify(l:filename, ":r") . ".py"
   let l:jupycent_file_exists = filereadable(l:jupycent_file)
-  if !filereadable(l:jupycent_file)
+  if !l:jupycent_file_exists
     let l:output = system(g:jupycent_command . " --to=py:percent "
           \ . "--output=" . shellescape(l:jupycent_file) . " "
           \ . shellescape(l:filename))
