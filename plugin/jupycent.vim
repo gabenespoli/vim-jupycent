@@ -63,7 +63,9 @@ function s:jupycent_set_buffer(filename, delete_on_close)  "{{{
     execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   endif
   if g:jupycent_line_return
-    normal! g`"zvzz
+    if line("'\"") > 0 && line("'\"") <= line("$") |
+      execute 'normal! g`"zvzz' |
+    endif
   endif
 endfunction  "}}}
 
