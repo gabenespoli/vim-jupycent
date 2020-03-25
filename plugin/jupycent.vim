@@ -48,7 +48,7 @@ function! s:read_from_ipynb()  "{{{
   call s:jupycent_set_buffer(l:filename, !l:jupycent_file_exists)
   if exists('g:loaded_fugitive') && g:loaded_fugitive == 1
     " make vim-fugitive realize that the jupycent file might be in a git dir
-    call fugitive#detect(expand(l:jupycent_file.':h'))
+    call FugitiveDetect(expand(l:jupycent_file.':h'))
   endif
 endfunction  "}}}
 
