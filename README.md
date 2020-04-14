@@ -65,7 +65,7 @@ The plugin has the following settings. If you want to override the default value
 
 *   `let g:jupycent_line_return = 1
 
-    When opening a notebook as a .py, return to the last line you were editing using `g\`"zvzz`
+    When opening a notebook as a .py, return to the last line you were editing using ``g`"zvzz``
 
 ## Acknowledgements
 
