@@ -45,16 +45,21 @@ function! s:read_from_ipynb()  "{{{
   let l:bufnr = bufnr("%")
   execute "edit " . l:jupycent_file
   execute "bwipeout" . l:bufnr
-  call s:jupycent_set_buffer(l:filename, !l:jupycent_file_exists)
+  call s:jupycent_set_buffer(l:filename, l:jupycent_file_exists)
   if exists('g:loaded_fugitive') && g:loaded_fugitive == 1
     " make vim-fugitive realize that the jupycent file might be in a git dir
     call FugitiveDetect(expand(l:jupycent_file.':h'))
   endif
 endfunction  "}}}
 
-function s:jupycent_set_buffer(filename, delete_on_close)  "{{{
+function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
   " set properties of the jupycent file buffer
   let b:jupycent_ipynb_file = a:filename
+  if a:jupycent_file_exists
+    let b:jupycent_keep_py = 1
+  else
+    let b:jupycent_keep_py = 0
+  endif
   set filetype=python
   setlocal foldmethod=expr
   setlocal foldexpr=JupycentFold(v:lnum)
@@ -63,9 +68,7 @@ function s:jupycent_set_buffer(filename, delete_on_close)  "{{{
   syntax match JupycentCell /^#\ %%\ \[markdown\]/
   hi link JupycentCell FoldColumn
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
-  if a:delete_on_close
-    execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
-  endif
+  execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   if g:jupycent_line_return
     if line("'\"") > 0 && line("'\"") <= line("$") |
       execute 'normal! g`"zvzz' |
@@ -79,6 +82,7 @@ function! s:write_to_ipynb() abort  "{{{
     return
   endif
   let l:jupycent_file = expand("<afile>:p")
+  echo "Updating " . b:jupycent_ipynb_file . "..."
   let l:output = system(g:jupycent_command . " --from=py:percent "
         \ . g:jupycent_to_ipynb_opts . " "
         \ . "--output " . shellescape(b:jupycent_ipynb_file) . " "
@@ -89,6 +93,9 @@ endfunction  "}}}
 function! s:cleanup()  "{{{
   if !exists("b:jupycent_ipynb_file")
     echo "Not a jupycent py file."
+    return
+  endif
+  if exists("b:jupycent_keep_py") && (b:jupycent_keep_py == 1)
     return
   endif
   call delete(expand("<afile>:p"))
@@ -121,6 +128,12 @@ function! JupycentSaveIpynb()  "{{{
   echo "File written: " . l:filename
 endfunction  "}}}
 
+function! JupycentSavePy()  "{{{
+  let b:jupycent_keep_py = 1
+  execute "write"
+endfunction  "}}}
+
 command JupycentSaveIpynb call JupycentSaveIpynb()
+command JupycentSavePy call JupycentSavePy()
 
 let loaded_jupycent = 1
