@@ -25,7 +25,7 @@ updated with any modifications.
 In more detail, opening a file `notebook.ipynb` in vim will create a temporary
 file  `notebook.py`. This file is the result of calling e.g.
 
-    jupytext --to=py:percent --output notebook.md notebook.ipynb
+    jupytext --to=py:percent --output notebook.py notebook.ipynb
 
 The file `notebook.py` is opened, and the original `notebook.ipynb` is wiped
 from vim. When saving the buffer, its contents is first written to
