@@ -1,17 +1,17 @@
 if exists("loaded_jupycent")
-    finish
+  finish
 endif
 
 if !exists('g:jupycent_command')
-    let g:jupycent_command = 'jupytext'
+  let g:jupycent_command = 'jupytext'
 endif
 
 if !exists('g:jupycent_enable')
-    let g:jupycent_enable = 1
+  let g:jupycent_enable = 1
 endif
 
 if !exists('g:jupycent_to_ipynb_opts')
-    let g:jupycent_to_ipynb_opts = '--to=ipynb --update'
+  let g:jupycent_to_ipynb_opts = '--to=ipynb --update'
 endif
 
 if !exists('g:jupycent_line_return')
@@ -19,12 +19,12 @@ if !exists('g:jupycent_line_return')
 endif
 
 if !g:jupycent_enable
-    finish
+  finish
 endif
 
 augroup jupycent
-    au!
-    autocmd BufReadPost *.ipynb call s:read_from_ipynb()
+  au!
+  autocmd BufReadPost *.ipynb call s:read_from_ipynb()
 augroup END
 
 function! s:read_from_ipynb()  "{{{
