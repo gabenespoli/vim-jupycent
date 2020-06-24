@@ -49,6 +49,10 @@ preserved when closing the buffer.
 
     Saves the current python (.py) file as a Jupyter notebook (.ipynb).
 
+*   `JupycentSavePy`
+
+    Ensures that the associated py file is not deleted upon exiting vim.
+
 ## Configuration
 
 The plugin has the following settings. If you want to override the default
