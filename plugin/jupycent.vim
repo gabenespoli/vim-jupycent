@@ -138,7 +138,17 @@ function! JupycentSavePy()  "{{{
   execute "write"
 endfunction  "}}}
 
+function! JupycentReadIpynb()  "{{{
+  let l:output = system(g:jupycent_command
+        \ . " --to=py:percent "
+        \ . " --output " . shellescape(expand("%:p"))
+        \ . " " . shellescape(b:jupycent_ipynb_file))
+  execute "edit"
+  echo "Reloaded ipynb file: " . b:jupycent_ipynb_file
+endfunction  "}}}
+
 command JupycentSaveIpynb call JupycentSaveIpynb()
 command JupycentSavePy call JupycentSavePy()
+command JupycentReadIpynb call JupycentReadIpynb()
 
 let loaded_jupycent = 1
