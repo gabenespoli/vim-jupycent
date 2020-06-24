@@ -45,28 +45,23 @@ function! s:read_from_ipynb()  "{{{
   let l:bufnr = bufnr("%")
   execute "edit " . l:jupycent_file
   execute "bwipeout" . l:bufnr
-  call s:jupycent_set_buffer(l:filename, l:jupycent_file_exists)
-  if exists('g:loaded_fugitive') && g:loaded_fugitive == 1
-    " make vim-fugitive realize that the jupycent file might be in a git dir
-    call FugitiveDetect(expand(l:jupycent_file.':h'))
-  endif
-endfunction  "}}}
 
-function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
-  " set properties of the jupycent file buffer
-  let b:jupycent_ipynb_file = a:filename
+  " set some buffer options
+  call JupycentSetBuffer()
   if a:jupycent_file_exists
     let b:jupycent_keep_py = 1
   else
     let b:jupycent_keep_py = 0
   endif
-  set filetype=python
-  setlocal foldmethod=expr
-  setlocal foldexpr=JupycentFold(v:lnum)
-  setlocal foldtext=getline(v:foldstart+1)
-  syntax match JupycentCell /^#\ %%/
-  syntax match JupycentCell /^#\ %%\ \[markdown\]/
-  hi link JupycentCell FoldColumn
+
+  " make vim-fugitive realize that the jupycent file might be in a git dir
+  if exists('g:loaded_fugitive') && g:loaded_fugitive == 1
+    call FugitiveDetect(expand(l:jupycent_file.':h'))
+  endif
+endfunction  "}}}
+
+function JupycentLinkIpynb(filename)  "{{{
+  let b:jupycent_ipynb_file = a:filename
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   if g:jupycent_line_return
@@ -74,6 +69,17 @@ function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
       execute 'normal! g`"zvzz' |
     endif
   endif
+endfunction  "}}}
+
+function JupycentSetBuffer()  "{{{
+  " set properties of the jupycent file buffer
+  set filetype=python
+  setlocal foldmethod=expr
+  setlocal foldexpr=JupycentFold(v:lnum)
+  setlocal foldtext=getline(v:foldstart+1)
+  syntax match JupycentCell /^#\ %%/
+  syntax match JupycentCell /^#\ %%\ \[markdown\]/
+  hi link JupycentCell FoldColumn
 endfunction  "}}}
 
 function! s:write_to_ipynb() abort  "{{{
@@ -126,6 +132,8 @@ function! JupycentSaveIpynb()  "{{{
         \ . "--output " . shellescape(l:filename) . " "
         \ . shellescape(expand("%:p")))
   echo "File written: " . l:filename
+  JupycentLinkIpynb(l:filename)
+  let b:jupycent_keep_py = 1
 endfunction  "}}}
 
 function! JupycentSavePy()  "{{{
@@ -135,5 +143,6 @@ endfunction  "}}}
 
 command JupycentSaveIpynb call JupycentSaveIpynb()
 command JupycentSavePy call JupycentSavePy()
+command JupycentSetBuffer call JupycentSetBuffer()
 
 let loaded_jupycent = 1
