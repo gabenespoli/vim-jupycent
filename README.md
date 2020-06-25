@@ -12,8 +12,10 @@ highlighting and folding based on this format.
 
 ## Installation
 
-1. Make sure that you have the `jupytext` CLI program installed (`pip install jupytext`).
-2. Install this plugin with your favourite method, like vim-plug (`Plug 'gabenespoli/vim-jupycent'`).
+1. Make sure that you have the `jupytext` CLI program installed (`pip install
+   jupytext`).
+2. Install this plugin with your favourite method, like vim-plug (`Plug
+   'gabenespoli/vim-jupycent'`).
 
 ## Usage
 
@@ -49,27 +51,35 @@ preserved when closing the buffer.
 
 ## Configuration
 
-The plugin has the following settings. If you want to override the default values shown below, you can define the corresponding variables in your `~/.vimrc`.
+The plugin has the following settings. If you want to override the default
+values shown below, you can define the corresponding variables in your
+`~/.vimrc`.
 
 *   `let g:jupycent_enable = 1`
 
-    You may disable the automatic conversion of `ipynb` files (i.e., deactivate this plugin) by setting this to 0.
+    You may disable the automatic conversion of `ipynb` files (i.e., deactivate
+    this plugin) by setting this to 0.
 
 *   `let g:jupycent_command = 'jupytext'`
 
-    The CLI `jupytext` command to use. You may include the full path to point to a specific `jupytext` executable not in your default `$PATH`.
+    The CLI `jupytext` command to use. You may include the full path to point
+    to a specific `jupytext` executable not in your default `$PATH`.
 
 *   `let g:jupycent_to_ipynb_opts = '--to=ipynb --update'`
 
-    Command line options for the conversion from `g:jupytext_fmt` back to the notebook format
+    Command line options for the conversion from `g:jupytext_fmt` back to the
+    notebook format
 
 *   `let g:jupycent_line_return = 1`
 
-    When opening a notebook as a .py, return to the last line you were editing using ``g`"zvzz``
+    When opening a notebook as a .py, return to the last line you were editing
+    using ``g`"zvzz``
 
 ## Acknowledgements
 
-This plugin takes some inspiration, code, and documentation from [jupytext.vim][3]. vim-jupycent is basically a fork of [jupytext.vim][3], but is probably too different to call it a fork.
+This plugin takes some inspiration, code, and documentation from
+[jupytext.vim][3]. vim-jupycent is basically a fork of [jupytext.vim][3], but
+is probably too different to call it a fork.
 
 [1]: http://jupyter.org
 [2]: https://github.com/mwouts/jupytext
