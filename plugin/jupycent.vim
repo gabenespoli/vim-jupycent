@@ -66,13 +66,21 @@ function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
   setlocal foldtext=getline(v:foldstart+1)
   syntax match JupycentCell /^#\ %%/
   syntax match JupycentCell /^#\ %%\ \[markdown\]/
-  hi link JupycentCell FoldColumn
+  execute "hi " . s:jupycent_set_highlight()
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   if g:jupycent_line_return
     if line("'\"") > 0 && line("'\"") <= line("$") |
       execute 'normal! g`"zvzz' |
     endif
+  endif
+endfunction  "}}}
+
+function s:jupycent_set_highlight()  "{{{
+  if exists('g:jupycent_highlight_style')
+    return 'JupycentCell ' . g:jupycent_highlight_style
+  else
+    return 'link JupycentCell ' . get(g:, 'jupycent_highlight_group_to_link', 'FoldColumn')
   endif
 endfunction  "}}}
 
@@ -102,7 +110,7 @@ function! s:cleanup()  "{{{
 endfunction  "}}}
 
 function! JupycentFold(lnum)  "{{{
-  let l:line = getline(a:lnum) 
+  let l:line = getline(a:lnum)
   if a:lnum <= 2 && l:line =~# '^#\ ---$'
     return '>1'
   elseif l:line =~# '^#\ %%$'
