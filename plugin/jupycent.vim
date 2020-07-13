@@ -74,6 +74,9 @@ function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
       execute 'normal! g`"zvzz' |
     endif
   endif
+  if exists("*CustomJupycentBufferSet")
+    call CustomJupycentBufferSet()
+  endif
 endfunction  "}}}
 
 function! s:write_to_ipynb() abort  "{{{
