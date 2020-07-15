@@ -64,8 +64,10 @@ function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
   setlocal foldmethod=expr
   setlocal foldexpr=JupycentFold(v:lnum)
   setlocal foldtext=getline(v:foldstart+1)
-  syntax match JupycentCell /^#\ %%/
-  syntax match JupycentCell /^#\ %%\ \[markdown\]/
+  syntax match JupycentCellCode /^#\ %%/
+  syntax match JupycentCellMarkdown /^#\ %%\ \[markdown\]/
+  hi link JupycentCellCode JupycentCell
+  hi link JupycentCellMarkdown JupycentCell
   hi link JupycentCell FoldColumn
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
