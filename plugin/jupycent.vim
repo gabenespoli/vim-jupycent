@@ -72,8 +72,8 @@ function s:jupycent_set_buffer(filename, jupycent_file_exists)  "{{{
   execute "autocmd jupycent BufWritePost,FileWritePost <buffer> call s:write_to_ipynb()"
   execute "autocmd jupycent BufUnload <buffer> call s:cleanup()"
   if g:jupycent_line_return
-    if line("'\"") > 0 && line("'\"") <= line("$") |
-      execute 'normal! g`"zvzz' |
+    if line("'\"") > 0 && line("'\"") <= line("$")
+      execute 'normal! g`"zvzz'
     endif
   endif
   if exists("*CustomJupycentBufferSet")
@@ -107,7 +107,7 @@ function! s:cleanup()  "{{{
 endfunction  "}}}
 
 function! JupycentFold(lnum)  "{{{
-  let l:line = getline(a:lnum) 
+  let l:line = getline(a:lnum)
   if a:lnum <= 2 && l:line =~# '^#\ ---$'
     return '>1'
   elseif l:line =~# '^#\ %%$'
