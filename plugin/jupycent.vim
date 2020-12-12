@@ -95,12 +95,16 @@ function! s:write_to_ipynb() abort  "{{{
   echo b:jupycent_ipynb_file . " updated."
 endfunction  "}}}
 
+function! s:unload_buf_get_value(varname, default)
+  return getbufvar(+expand("<abuf>"), a:varname, a:default)
+endfunction
+
 function! s:cleanup()  "{{{
-  if !exists("b:jupycent_ipynb_file")
+  if s:unload_buf_get_value("jupycent_ipynb_file", v:none) == v:none
     echo "Not a jupycent py file."
     return
   endif
-  if exists("b:jupycent_keep_py") && (b:jupycent_keep_py == 1)
+  if s:unload_buf_get_value("jupycent_keep_py", 0) == 1
     return
   endif
   call delete(expand("<afile>:p"))
